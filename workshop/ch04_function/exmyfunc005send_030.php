@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<!-- สร้างฟอร์มสำหรับรับข้อมูลนักเรียนจำนวน 1 คน โดยให้ผู้ใช้ระบุข้อมูลดังนี้ รหัสนักเรียน ชื่อ-สกุล คะแนนช่องที่ 1 คะแนนช่องที่ 2 -->
+<form action="exmyfunc005send_020.php" method="post">
+    <input type="text" name="stdid" required placeholder="รหัสนักเรียน">
+    <input type="text" name="stdname" required placeholder="ชื่อรักเรียน">
+    <input type="number" name="stdscore1" required placeholder="คะแนนครั้งที่1" min="0" max="50">
+    <input type="number" name="stdscore2" required placeholder="คะแนนครั้งที่2" min="0" max="50">
+    <button type="submit">ส่ง</button>
+    
+</form>
+</body>
+</html>
