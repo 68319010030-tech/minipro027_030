@@ -108,48 +108,136 @@
 
         <div class="container">
             <!-- 1. ฝั่งลูกค้า: รับคิว & เช็กสถานะคิวด้วยเลขบัตร -->
-            <div class="card">
-                <div class="card-title">
-                    <i class="fa-solid fa-ticket" style="color: var(--primary);"></i> 1. บริการสำหรับลูกค้า
-                </div>
-                
-                <form id="bookingForm" onsubmit="return false;">
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-id-card"></i> เลขบัตรประชาชน / เลขประจำตัว *</label>
-                        <input type="text" id="idCard" placeholder="เช่น 1234567890123" maxlength="13" required>
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-user"></i> ชื่อ-นามสกุล</label>
-                        <input type="text" id="name" placeholder="เช่น สมชาย ใจดี">
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-phone"></i> เบอร์โทรศัพท์</label>
-                        <input type="tel" id="phone" placeholder="เช่น 0812345678">
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fa-solid fa-list-check"></i> ประเภทบริการ</label>
-                        <select id="serviceType">
-                            <option value="A">บริการทั่วไป (คิว A)</option>
-                            <option value="B">ธุรกรรมการเงิน (คิว B)</option>
-                            <option value="C">ปรึกษา/ร้องเรียน (คิว C)</option>
-                        </select>
-                    </div>
-                    <button type="button" class="btn btn-primary" onclick="addQueue()"><i class="fa-solid fa-plus-circle"></i> กดรับคิว</button>
-                </form>
+            <!-- 1. ฝั่งลูกค้า -->
+<div class="card">
 
-                <div id="ticketDisplay" style="display: none;"></div>
+    <div class="card-title">
+        <i class="fa-solid fa-ticket"
+           style="color: var(--primary);"></i>
+        1. บริการสำหรับลูกค้า
+    </div>
 
-                <div class="search-box-highlight">
-                    <label style="font-weight: 600; font-size: 1rem; color: var(--primary);"><i class="fa-solid fa-magnifying-glass"></i> ตรวจสอบคิวของคุณด้วยเลขบัตรประชาชน</label>
-                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">กรอกเลขบัตรเพื่อดูว่าถึงคิวของคุณแล้วหรือยัง</p>
-                    <div style="display: flex; gap: 8px;">
-                        <input type="text" id="searchIdCard" placeholder="กรอกเลขบัตรประชาชน 13 หลัก" maxlength="13" onkeypress="if(event.key === 'Enter') searchQueueById()">
-                        <button type="button" class="btn btn-warning" style="width: auto; white-space: nowrap;" onclick="searchQueueById()"><i class="fa-solid fa-search"></i> ค้นหา</button>
-                    </div>
-                    <div id="searchResult"></div>
-                </div>
-            </div>
+    <form id="bookingForm" onsubmit="return false;">
 
+        <!-- เลขบัตรประชาชน -->
+
+        <div class="form-group">
+
+            <label>
+                <i class="fa-solid fa-id-card"></i>
+                เลขบัตรประชาชน *
+            </label>
+
+            <input
+                type="text"
+                id="idCard"
+                placeholder="กรอกเลขบัตรประชาชน 13 หลัก"
+                maxlength="13"
+                inputmode="numeric"
+                required
+            >
+
+        </div>
+
+
+        <!-- ประเภทบริการ -->
+
+        <div class="form-group">
+
+            <label>
+                <i class="fa-solid fa-list-check"></i>
+                ประเภทบริการ
+            </label>
+
+            <select id="serviceType">
+
+                <option value="A">
+                    บริการทั่วไป (คิว A)
+                </option>
+
+                <option value="B">
+                    ธุรกรรมการเงิน (คิว B)
+                </option>
+
+                <option value="C">
+                    ปรึกษา / ร้องเรียน (คิว C)
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- ปุ่มรับคิว -->
+
+        <button
+            type="button"
+            class="btn btn-primary"
+            onclick="addQueue()"
+        >
+            <i class="fa-solid fa-plus-circle"></i>
+            กดรับคิว
+        </button>
+
+    </form>
+
+
+    <div id="ticketDisplay" style="display: none;"></div>
+
+
+    <!-- ตรวจสอบคิว -->
+
+    <div class="search-box-highlight">
+
+        <label
+            style="
+                font-weight: 600;
+                font-size: 1rem;
+                color: var(--primary);
+            "
+        >
+            <i class="fa-solid fa-magnifying-glass"></i>
+            ตรวจสอบคิวของคุณด้วยเลขบัตรประชาชน
+        </label>
+
+        <p
+            style="
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                margin-bottom: 10px;
+            "
+        >
+            กรอกเลขบัตรเพื่อดูสถานะคิวของคุณ
+        </p>
+
+        <div style="display: flex; gap: 8px;">
+
+            <input
+                type="text"
+                id="searchIdCard"
+                placeholder="กรอกเลขบัตรประชาชน 13 หลัก"
+                maxlength="13"
+                inputmode="numeric"
+                onkeypress="if(event.key === 'Enter') searchQueueById()"
+            >
+
+            <button
+                type="button"
+                class="btn btn-warning"
+                style="width: auto; white-space: nowrap;"
+                onclick="searchQueueById()"
+            >
+                <i class="fa-solid fa-search"></i>
+                ค้นหา
+            </button>
+
+        </div>
+
+        <div id="searchResult"></div>
+
+    </div>
+
+</div>
             <!-- 2. ฝั่งพนักงานเรียกคิว -->
             <div class="card">
                 <div class="card-title">
@@ -367,67 +455,146 @@
             }, 600);
         }
 
-        function addQueue() {
-            let idCard = document.getElementById('idCard').value.trim();
-            let name = document.getElementById('name').value.trim();
-            let phone = document.getElementById('phone').value.trim();
-            const type = document.getElementById('serviceType').value;
+    async function addQueue() {
+    const idCard =
+        document.getElementById('idCard').value.trim();
+    const type =
+        document.getElementById('serviceType').value;
+    // ตรวจสอบเลขบัตร
+    if (!/^\d{13}$/.test(idCard)) {
 
-            if (!idCard) {
-                alert("กรุณากรอกเลขบัตรประชาชนก่อนรับคิวครับ");
-                document.getElementById('idCard').focus();
-                return;
-            }
+        alert("กรุณากรอกเลขบัตรประชาชน 13 หลัก");
 
-            if (!name) name = "ลูกค้าทั่วไป";
-            if (!phone) phone = "-";
+        document.getElementById('idCard').focus();
 
-            const count = queueCounters[type] || 1;
-            queueCounters[type] = count + 1;
-            
-            const queueCode = `${type}-${String(count).padStart(3, '0')}`;
-            const now = new Date();
+        return;
+    }
+    try {
 
-            const newQueue = {
-                code: queueCode,
-                idCard: idCard,
-                name: name,
-                phone: phone,
-                type: type === 'A' ? 'บริการทั่วไป' : type === 'B' ? 'ธุรกรรมการเงิน' : 'ปรึกษา/ร้องเรียน',
-                date: now.toLocaleDateString('th-TH'),
-                time: now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })
-            };
+        // ค้นหาผู้ป่วยจาก Database
 
-            queues.push(newQueue);
-            saveData();
-            renderUI();
+        const response = await fetch(
+    `../data/get_patient.php?citizen_id=${encodeURIComponent(idCard)}`
+);
+        const data = await response.json();
+        // ไม่พบผู้ป่วย
+        if (!data.success) {
 
-            const ticketDisplay = document.getElementById('ticketDisplay');
-            ticketDisplay.style.display = 'block';
-            ticketDisplay.innerHTML = `
-                <div class="ticket-card">
-                    <p style="font-size: 0.85rem; opacity: 0.9;">บัตรคิวของคุณ</p>
-                    <div class="ticket-number">${newQueue.code}</div>
-                    <p>คุณ: ${newQueue.name}</p>
-                    <p style="font-size: 0.85rem; opacity: 0.9;">เลขบัตรประชาชน: <span class="id-card-badge" style="color: black;">${newQueue.idCard}</span></p>
-                    <p style="font-size: 0.75rem; opacity: 0.8; margin-top: 5px;"><i class="fa-regular fa-calendar"></i> วันที่: ${newQueue.date} | <i class="fa-regular fa-clock"></i> เวลา: ${newQueue.time} น.</p>
-                </div>
-            `;
+            alert(data.message);
 
-            document.getElementById('idCard').value = '';
-            document.getElementById('name').value = '';
-            document.getElementById('phone').value = '';
+            return;
         }
+        // ข้อมูลผู้ป่วยจาก Database
+        const patient = data.patient;
+        const name =
+            `${patient.first_name} ${patient.last_name}`;
+
+        const phone =
+            patient.phone || "-";
+
+
+        // สร้างหมายเลขคิว
+        const count =
+            queueCounters[type] || 1;
+        queueCounters[type] = count + 1;
+        const queueCode =
+            `${type}-${String(count).padStart(3, '0')}`;
+        const now = new Date();
+        // สร้างข้อมูลคิว
+        const newQueue = {
+            code: queueCode,
+            idCard: idCard,
+            name: name,
+            phone: phone,
+            type:
+                type === 'A'
+                    ? 'บริการทั่วไป'
+                    : type === 'B'
+                        ? 'ธุรกรรมการเงิน'
+                        : 'ปรึกษา/ร้องเรียน',
+            date:
+                now.toLocaleDateString('th-TH'),
+            time:
+                now.toLocaleTimeString(
+                    'th-TH',
+                    {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }
+                )
+        };
+        // เพิ่มคิว
+        queues.push(newQueue);
+        saveData();
+        renderUI();
+        // แสดงบัตรคิว
+        const ticketDisplay =
+            document.getElementById('ticketDisplay');
+
+        ticketDisplay.style.display = 'block';
+        ticketDisplay.innerHTML = `
+            <div class="ticket-card">
+                <p
+                    style="
+                        font-size: 0.85rem;
+                        opacity: 0.9;
+                    "
+                >
+                    บัตรคิวของคุณ
+                </p>
+                <div class="ticket-number">
+                    ${newQueue.code}
+                </div>
+                <p>
+                    คุณ: ${newQueue.name}
+                </p>
+                <p
+                    style="
+                        font-size: 0.85rem;
+                        opacity: 0.9;
+                    "
+                >
+                    ประเภทบริการ:
+                    ${newQueue.type}
+                </p>
+                <p
+                    style="
+                        font-size: 0.75rem;
+                        opacity: 0.8;
+                        margin-top: 5px;
+                    "
+                >
+                    <i class="fa-regular fa-calendar"></i>
+
+                    วันที่: ${newQueue.date}
+
+                    |
+
+                    <i class="fa-regular fa-clock"></i>
+
+                    เวลา: ${newQueue.time} น.
+                </p>
+
+            </div>
+
+        `;
+        // ล้างเลขบัตรหลังรับคิว
+        document.getElementById('idCard').value = '';
+    } catch (error) {
+        console.error(error);
+        alert(
+            "ไม่สามารถเชื่อมต่อฐานข้อมูลได้"
+        );
+    }
+}
 
         function searchQueueById() {
             const inputId = document.getElementById('searchIdCard').value.trim();
             const resultDiv = document.getElementById('searchResult');
-
             if (!inputId) {
                 alert("กรุณากรอกเลขบัตรประชาชนเพื่อค้นหา");
                 return;
             }
-
             if (currentCalling && currentCalling.idCard === inputId) {
                 resultDiv.innerHTML = `
                     <div class="status-badge status-calling">
@@ -438,7 +605,6 @@
                 `;
                 return;
             }
-
             const waitingIndex = queues.findIndex(q => q.idCard === inputId);
             if (waitingIndex !== -1) {
                 const targetQueue = queues[waitingIndex];
@@ -450,7 +616,6 @@
                 `;
                 return;
             }
-
             const doneQueue = historyQueues.find(h => h.idCard === inputId);
             if (doneQueue) {
                 resultDiv.innerHTML = `
@@ -462,7 +627,6 @@
                 `;
                 return;
             }
-
             resultDiv.innerHTML = `
                 <div class="status-badge status-notfound">
                     <i class="fa-solid fa-triangle-exclamation"></i> ไม่พบข้อมูลคิวสำหรับเลขบัตร "${inputId}"<br>
@@ -470,44 +634,34 @@
                 </div>
             `;
         }
-
         function callNextQueue() {
             if (queues.length === 0) {
                 alert("ไม่มีคิวรออยู่ในขณะนี้ครับ");
                 return;
             }
-
             const counter = document.getElementById('counterSelect').value;
             const now = new Date();
-
             if (currentCalling) {
                 historyQueues.unshift(currentCalling);
             }
-
             currentCalling = queues.shift();
             currentCalling.counter = counter;
             currentCalling.servedDate = now.toLocaleDateString('th-TH');
             currentCalling.servedTime = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
-
             saveData();
             renderUI();
-
             speakQueue(currentCalling.code, counter);
         }
-
         function finishCurrentQueue() {
             if (!currentCalling) {
                 alert("ไม่มีคิวที่กำลังรับบริการอยู่ครับ");
                 return;
             }
-
             historyQueues.unshift(currentCalling);
             currentCalling = null;
-
             saveData();
             renderUI();
         }
-
         function recallCurrentQueue() {
             if (!currentCalling) {
                 alert("ยังไม่มีการเรียกคิวใดๆ");
@@ -520,13 +674,11 @@
         function openEditModal(type, index) {
             const item = (type === 'waiting') ? queues[index] : historyQueues[index];
             if (!item) return;
-
             document.getElementById('editType').value = type;
             document.getElementById('editIndex').value = index;
             document.getElementById('editIdCard').value = item.idCard || '';
             document.getElementById('editName').value = item.name || '';
             document.getElementById('editPhone').value = item.phone || '';
-
             document.getElementById('editModal').style.display = 'flex';
         }
 
